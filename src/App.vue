@@ -4,37 +4,34 @@
     <div class="image">
       <img src="https://images.prismic.io/bridgers/c18cc0eb-9135-4daa-a91a-d225e98f8f18_Skeleton.png?auto=compress,format&rect=0,0,1000,232&w=1000&h=232">
     </div>
-    <ArtistList v-for="artist in PhoebeData" :key="artist.id" :artist="artist"/>
-    <ArtistList v-for="artist in PvrisData" :key="artist.id" :artist="artist"/>
-    <ArtistList v-for="artist in ClairoData" :key="artist.id" :artist="artist"/>
-    <ArtistList v-for="artist in DizzyData" :key="artist.id" :artist="artist"/>
-    <ArtistList v-for="artist in HayleyData" :key="artist.id" :artist="artist"/>
-    <ArtistList v-for="artist in BirdyData" :key="artist.id" :artist="artist"/>
+
+    <div class="artists-gallery">
+      <div class="gallery-options">
+        <input type="text" v-model="search" placeholder="Chercher un.e artiste">
+      </div>
+      <ArtistList v-for="artist in filteredArtists" :key="artist.id" :artist="artist"/>
+      <ArtistEventsList v-for="event in PhoebeEvents" :key="event.id" :event="event" />
+      
+   </div>
   </div>
 </template>
 
 <script>
 import ArtistList from './components/ArtistList.vue';
-import {getPhoebeData} from '@/services/api/artistsRepository.js';
-import {getPvrisData} from '@/services/api/artistsRepository.js';
-import {getClairoData} from '@/services/api/artistsRepository.js';
-import {getDizzyData} from '@/services/api/artistsRepository.js';
-import {getHayleyData} from '@/services/api/artistsRepository.js';
-import {getBirdyData} from '@/services/api/artistsRepository.js';
+import ArtistEventsList from './components/ArtistEventsList.vue';
+import {getPhoebeData, getPvrisData, getClairoData, getDizzyData, getHayleyData, getBirdyData, getTaylorData} from '@/services/api/artistsRepository.js';
+import {getPhoebeEventData} from '@/services/api/artistsRepository.js';
 
 export default {
   name: 'App',
   components: {
-    ArtistList, 
+    ArtistList, ArtistEventsList,
   },
   data(){
     return{
-      PhoebeData:[],
-      PvrisData:[],
-      ClairoData:[],
-      DizzyData:[],
-      HayleyData:[],
-      BirdyData:[],
+      PhoebeEvents:[],
+      AllArtistsData:[],
+      search: ""
     }
   },
   created(){
@@ -43,19 +40,34 @@ export default {
   methods: {
     async retrieveArtistsData(){
       const PhoebeData = await getPhoebeData();
-      this.PhoebeData.push(PhoebeData);
+      this.AllArtistsData.push(PhoebeData);
       const PvrisData = await getPvrisData();
-      this.PvrisData.push(PvrisData);
+      this.AllArtistsData.push(PvrisData);
       const ClairoData = await getClairoData();
-      this.ClairoData.push(ClairoData);
+      this.AllArtistsData.push(ClairoData);
       const DizzyData = await getDizzyData();
-      this.DizzyData.push(DizzyData);
+      this.AllArtistsData.push(DizzyData);
       const HayleyData = await getHayleyData();
-      this.HayleyData.push(HayleyData);
+      this.AllArtistsData.push(HayleyData);
       const BirdyData = await getBirdyData();
-      this.BirdyData.push(BirdyData);
-      console.log(PhoebeData);
-      console.log(PhoebeData.name);
+      this.AllArtistsData.push(BirdyData);
+      const TaylorData = await getTaylorData();
+      this.AllArtistsData.push(TaylorData);
+      console.log(this.AllArtistsData);
+      console.log(this.AllArtistsData.name);
+    },
+    filterArtists(){
+      return this.AllArtistsData.filter(artist=>artist.name.toLowerCase().includes(this.search.toLowerCase()));
+    },
+    async retrieveEventsData(){
+      const PhoebeEventsData = await getPhoebeEventData();
+      this.PhoebeEvents.push(PhoebeEventsData);
+      console.log(this.PhoebeEvents);
+    }
+  },
+  computed:{
+    filteredArtists(){
+      return this.search === ""? this.AllArtistsData:this.filterArtists();
     }
   }
 }

@@ -1,8 +1,10 @@
 <template>
-  <div class="artist">
-    <div v-if="artist.name">
-      <h2 class="name">{{ artist.name }}</h2>
-      <img :src="artist.thumb_url" :alt="artist.name"/>
+  <div class="event">
+    <div v-if="event.artist.name">
+      <h2 class="name">{{ event.artist.name }}</h2>
+      <p class="city"> {{event.city}} </p>
+      <p class="date"> {{event.starts_at}} </p>
+      <p class="status"> {{event.offers.status}} </p>
     </div>
   </div>
 </template>
@@ -10,7 +12,7 @@
 <script>
 
 export default {
-  props: ['artist']
+  props: ['event']
 }
 </script>
 

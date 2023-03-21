@@ -11,6 +11,19 @@ const getPhoebeData = async function(){
 }
 export {getPhoebeData}
 
+const getPhoebeEventData = async function(){
+   
+    const response = await fetch ('https://rest.bandsintown.com/artists/Phoebe%20Bridgers/events/?app_id=426caffc63138441a125573b12af891c')
+    if (response.status == 200){
+        return response.json()
+    }
+    else {
+        new Error(response.statusText)
+    }
+
+}
+export {getPhoebeEventData}
+
 const getPvrisData = async function(){
    
     const response = await fetch ('https://rest.bandsintown.com/artists/Pvris/?app_id=426caffc63138441a125573b12af891c')
@@ -75,6 +88,19 @@ const getBirdyData = async function(){
 
 }
 export {getBirdyData}
+
+const getTaylorData = async function(){
+   
+    const response = await fetch ('https://rest.bandsintown.com/artists/Taylor%20Swift/?app_id=426caffc63138441a125573b12af891c')
+    if (response.status == 200){
+        return response.json()
+    }
+    else {
+        new Error(response.statusText)
+    }
+
+}
+export {getTaylorData}
 
 
 // 'https://rest.bandsintown.com/artists/Hayley%20Williams/?app_id=426caffc63138441a125573b12af891c'
