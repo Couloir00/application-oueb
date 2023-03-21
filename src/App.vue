@@ -10,7 +10,7 @@
         <input type="text" v-model="search" placeholder="Chercher un.e artiste">
       </div>
       <ArtistList v-for="artist in filteredArtists" :key="artist.id" :artist="artist"/>
-      <ArtistEventsList v-for="event in PhoebeEvents" :key="event.id" :event="event" />
+      <ArtistEventsList v-if="PhoebeEvents.length > 0" :artist="AllArtistsData.find(artist => artist.name === 'Phoebe Bridgers')" :events="PhoebeEvents" />
       
    </div>
   </div>
@@ -36,6 +36,7 @@ export default {
   },
   created(){
     this.retrieveArtistsData();
+    this.retrieveEventsData();
   },
   methods: {
     async retrieveArtistsData(){
@@ -59,10 +60,11 @@ export default {
     filterArtists(){
       return this.AllArtistsData.filter(artist=>artist.name.toLowerCase().includes(this.search.toLowerCase()));
     },
+    //TO DO Retrieve a list of events from an artist and display it
     async retrieveEventsData(){
       const PhoebeEventsData = await getPhoebeEventData();
-      this.PhoebeEvents.push(PhoebeEventsData);
-      console.log(this.PhoebeEvents);
+      this.PhoebeEvents.push(...PhoebeEventsData);
+      console.log(this.PhoebeEvents.id);
     }
   },
   computed:{

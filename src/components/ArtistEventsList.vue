@@ -1,18 +1,22 @@
 <template>
   <div class="event">
-    <div v-if="event.artist.name">
-      <h2 class="name">{{ event.artist.name }}</h2>
-      <p class="city"> {{event.city}} </p>
-      <p class="date"> {{event.starts_at}} </p>
-      <p class="status"> {{event.offers.status}} </p>
-    </div>
+     <div v-if="artist.name">
+      <h2 class="name">{{ artist.name }} events</h2>
+      <ul class="events">
+        <li v-for="event in events" :key="event.id"> {{event.name}} - {{event.date}} </li>
+      </ul>
+  </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  props: ['event']
+  name: "ArtistEventsList",
+  props: {
+    artist: Object,
+    events: Array,
+  }
 }
 </script>
 
@@ -21,7 +25,7 @@ export default {
   flex-direction: row;
 }
 
-.artist{
+.event{
   width: 25%;
   height: 25%;
   background-color: #000000;
@@ -35,7 +39,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-.artist:hover{
+.event:hover{
   filter: invert(1);
 }
 
