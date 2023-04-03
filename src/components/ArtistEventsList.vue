@@ -3,7 +3,7 @@
      <div v-if="artist.name">
       <h2 class="name">{{ artist.name }} events</h2>
       <ul class="events">
-        <li v-for="event in events" :key="event.id"> {{event.name}} - {{event.date}} </li>
+        <li v-for="event in events" :key="event.id"> {{event.venue.country}} - {{event.datetime}} </li>
       </ul>
   </div>
   </div>
