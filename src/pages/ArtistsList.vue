@@ -1,3 +1,6 @@
+
+
+
 <template>
  <div>
   <h1> LES ARTISTES ! </h1>
@@ -9,10 +12,16 @@
       <div class="gallery-options">
           <input type="text" v-model="search" placeholder="Chercher un.e artiste">
       </div>
+      <router-link to="/ArtistEvents">
       <ArtistList v-for="artist in filteredArtists" :key="artist.id" :artist="artist"/>
-      <ArtistEventsList v-if="AllEvents.length>0" :artist="AllArtists.find(artist => artist.name === 'Phoebe Bridgers')" :events="AllEvents"/>
-    </div>
+      </router-link>
 
+      <ArtistEventsList v-if="AllEvents.length>0" :artist="AllArtistsData.find(artist => artist.name === 'Phoebe Bridgers')" :events="AllEvents"/>
+        
+         <!-- Ajouter l'attribut :AllArtistsData pour passer la valeur de la propriété AllArtistsData au composant EventsGallery -->
+      <!-- <ArtistEventsList :AllArtistsData="AllArtistsData" :artist="AllArtistsData.find(artist => artist.name === 'Phoebe Bridgers')" :events="AllEvents" /> -->
+    </div>
+  
   </div>  
 </template>
 
@@ -70,5 +79,12 @@ export default {
     }
   }
 }
+
+// TO DO AFFICHER LES EVENTS EN FONCTION DE QUEL ARTISTE ON A CHOISI
+//       FAIRE UNE BELLE MOSAÏQUE
+// TO ASK POURQUOI EST CE QU'IL Y A DES PROBLEMES D'AFFICHAGE MAIS PAS TOUT LE TEMPS
+//        POURQUOI EST CE QUE JE N'ARRIVE PAS A AFFICHER MES EVENTS DANS MA PAGE EVENT MAIS J'ARRIVE A LES AFFICHER SUR MA PAGE ARTISTS
+//        COMMENT COMMUNIQUER UNE INFO SUR L'ENDROIT OU ON CLIQUE (EX: JE CLIQUE SUR CLAIRO, JE VEUX RECUP SON NOM POUR N'AVOIR QUE SES INFOS POUR LES EVENTS)
+
 </script>
 

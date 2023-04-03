@@ -9,9 +9,13 @@
       <div class="gallery-options">
         <input type="text" v-model="search" placeholder="Chercher un événement">
       </div>
-      <ArtistEventsList v-for="events in AllEvents" :key="events.id" :artist="AllEvents"/>
-      <!-- <ArtistEventsList v-if="AllEvents.length > 0" :artist="AllArtists.find(artist => artist.name === 'Phoebe Bridgers')" :events="AllEvents" /> -->
+      <!-- <ArtistEventsList v-for="events in AllEvents" :key="events.id" :artist="AllEvents"/> -->
+
+      <!-- Utiliser la valeur de la prop AllArtistsData pour trouver l'artiste -->
+      <ArtistEventsList v-if="AllEvents.length > 0" :artist="this.AllArtistsData.find(artist => artist.name === 'Phoebe Bridgers')" :events="AllEvents" />
     </div>
+
+    <router-link to="/"> Go to back Artists Page </router-link>
   </div>
 
 </template>
@@ -24,6 +28,13 @@
   name: 'EventsGallery',
   components: {
    ArtistEventsList
+  },
+  // Ajouter la propriété props pour recevoir la valeur de la propriété AllArtistsData
+  props:{
+    AllArtistsData:{
+      type: Array,
+      required: true
+    }
   },
   data(){
     return{
