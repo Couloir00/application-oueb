@@ -1,151 +1,50 @@
+// let artists = ['Lana Del Rey'];
+let artists = ['Lana Del Rey','Palace','Phoebe Bridgers', 'Clairo', 'Pvris', 'Birdy', 'Dizzy', 'Hayley Williams', 'Boygenius', 'Lucy Dacus', 'Julien Baker', 'The Greeting Committee', 'Florence & The Machine', 'Paramore', 'Noga Erez', 'Zola Blood', 'Mitski', 'The Night Game', 'BROODS', 'Phoenix', 'Tash Sultana', 'Lorde', 'Isaac Delusion'];
 
 
 
+const formattedArtistsNames = async function(artists){
+    const artistsData = [];
 
-const getPhoebeData = async function(){
-    // let toto
-    // "jzioefije" + toto + "dzdjoizj"
-    // `hdudhdiud${toto}`
-    const response = await fetch ('https://rest.bandsintown.com/artists/Phoebe%20Bridgers/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
+    artists.forEach((artist) => {
+        const artistName = artist.replace(/\s/g, '%20');
+        artistsData.push(artistName);
+    });
 
+    return artistsData;
 }
-export {getPhoebeData}
 
-const getPhoebeEventData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Phoebe%20Bridgers/events/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
+const getAllData = async function (artists){
+    const formattedArtists = await formattedArtistsNames(artists);
+    const artistsData = [];
 
+    for (const artist of formattedArtists){
+        const response = await fetch(`https://rest.bandsintown.com/artists/${artist}/?app_id=426caffc63138441a125573b12af891c`);
+        if (response.status ==200){
+            const artistData = await response.json();
+            artistsData.push(artistData);
+        } 
+        else {
+            throw new Error(response.statusText);
+        }
+    }
+    return artistsData;
 }
-export {getPhoebeEventData}
 
-const getPvrisData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Pvris/?app_id=426caffc63138441a125573b12af891c')
+const getEventsData = async function (artist){
+    const response = await fetch(`https://rest.bandsintown.com/artists/${artist}/events/?app_id=426caffc63138441a125573b12af891c`);
     if (response.status == 200){
-        return response.json()
-    }
+        return response.json();
+    } 
     else {
-        new Error(response.statusText)
+        new Error(response.statusText);
     }
-
 }
-export {getPvrisData}
 
-const getClairoData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Clairo/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
 
-}
-export {getClairoData}
 
-const getDizzyData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Dizzy/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
+export{artists, getAllData, getEventsData}
 
-}
-export {getDizzyData}
-
-const getHayleyData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Hayley%20Williams/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
-
-}
-export {getHayleyData}
-
-const getBirdyData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Birdy/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
-
-}
-export {getBirdyData}
-
-const getTaylorData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Taylor%20Swift/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
-
-}
-export {getTaylorData}
-
-const getIsaacData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Isaac%20Delusion/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
-
-}
-export {getIsaacData}
-
-const getGreetingCommitteeData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/The%20Greeting%20Committee/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
-
-}
-export {getGreetingCommitteeData}
-
-const getBoygeniusData = async function(){
-   
-    const response = await fetch ('https://rest.bandsintown.com/artists/Boygenius/?app_id=426caffc63138441a125573b12af891c')
-    if (response.status == 200){
-        return response.json()
-    }
-    else {
-        new Error(response.statusText)
-    }
-
-}
-export {getBoygeniusData}
 
 
 
@@ -162,4 +61,5 @@ export {getBoygeniusData}
 // TO ASK POURQUOI EST CE QU'IL Y A DES PROBLEMES D'AFFICHAGE MAIS PAS TOUT LE TEMPS
 //        POURQUOI EST CE QUE JE N'ARRIVE PAS A AFFICHER MES EVENTS DANS MA PAGE EVENT MAIS J'ARRIVE A LES AFFICHER SUR MA PAGE ARTISTS
 //        COMMENT COMMUNIQUER UNE INFO SUR L'ENDROIT OU ON CLIQUE (EX: JE CLIQUE SUR CLAIRO, JE VEUX RECUP SON NOM POUR N'AVOIR QUE SES INFOS POUR LES EVENTS)
+// Préférable de faire une pop-up plutôt que deux fenêtres
 

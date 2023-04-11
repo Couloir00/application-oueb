@@ -1,43 +1,139 @@
 <template>
-  <div class="event">
-     <div v-if="artist.name">
-      <h2 class="name">{{ artist.name }} events</h2>
-      <ul class="events">
-        <li v-for="event in events" :key="event.id"> {{event.venue.country}} - {{event.datetime}} </li>
-      </ul>
-  </div>
+  <div class="eventCard">
+    <div class="eventInfo">
+      <h2 class="country">{{country}}</h2>
+      <p class="city">{{city}}</p>
+      <p class="datetime">{{formattedDate}}</p>
+
+      <a v-if="ticketAvailable" :href="ticketUrl" target="_blank">Get Tickets</a>
+      <p v-else>Sold out</p>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: "ArtistEventsList",
+  name: "EventCard",
   props: {
-    artist: Object,
-    events: Array,
-  }
+    city: String,
+    datetime: String,
+    tickets: Object,
+    country: String,
+  },
+  computed:{
+    formattedDate(){
+      const dateObj = new Date(this.datetime)
+      const options = { day: 'numeric', month: 'short', year: 'numeric' }
+      return dateObj.toLocaleDateString('en-US', options)
+    },
+    ticketUrl(){
+     const ticketOffer = this.tickets.find(offer=>offer.type ==='Tickets');
+      if(ticketOffer){
+        return ticketOffer.url;
+      }
+      return null;
+    },
+    ticketAvailable(){
+      return this.tickets.some(offer=>offer.status ==='available');
+    }
+  },
 }
+
+
 </script>
 
 <style scoped>
-.body{
-  display:flex;
+
+.eventCard {
+  display: flex;
   justify-content: center;
+  margin-bottom: 20px;
+}
+
+.eventInfo {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 5px solid #f5cf9b;
+  border-radius: 30px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 20px;
+}
+
+.country {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.city,
+.venue,
+.datetime {
+  margin-right:20px;
+  margin-top: 5px;
+  margin-left: 10px;
 }
 
 
-.event{
-  float: left;
-  width: 21%;
-  padding: 10px;
-  margin: 20px;
-  height: 250px;
-  position: relative;
-
+a {
+  margin-top: 10px;
+  margin-left: auto;
+  background-color: #f5cf9b;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
 }
-.event:hover{
-  filter: invert(1);
+
+a:hover {
+  background-color: #f0b058;
+}
+
+.eventInfo:hover {
+  background-color: #f5cf9b;
+}
+
+@media screen and (max-width: 768px) {
+  .eventInfo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .city,
+  .venue,
+  .datetime {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .country {
+    font-size: 1rem;
+  }
+  
+  .eventInfo {
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .city,
+  .venue,
+  .datetime {
+    font-size: 0.8rem;
+    margin-top: 3px;
+  }
+  
+  a {
+    margin-top: 5px;
+    font-size: 0.8rem;
+  }
 }
 
 </style>
+
+

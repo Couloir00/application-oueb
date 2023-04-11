@@ -15,10 +15,7 @@ export default {
 </script>
 
 <style scoped>
-.body{
-   display:flex;
-   justify-content: center;
-}
+
 
 
 .artist{
