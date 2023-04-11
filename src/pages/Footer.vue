@@ -1,8 +1,8 @@
 <template>
     <div>
         <footer>
-            <p>INDIE BANGERZZ RECORDS by Lou Couard</p>
-        </footer>
+      <p>Tous droits réservés © 2023 Indie Bangerzzz</p>
+    </footer>
     </div>
 </template>
   
@@ -13,10 +13,11 @@ export default {
 </script>
 <style>
 
-footer{
-    text-align:center;
-    color: rgb(246, 33, 33);
-    width: 100vw;
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
 }
 </style>
 

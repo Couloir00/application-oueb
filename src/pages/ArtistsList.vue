@@ -1,11 +1,13 @@
 <template>
  <div>
+  <HeaderBand>
+    </HeaderBand>
   <h1> LES ARTISTES ! </h1>
     <div class="image-container">
       <img class="image" src="@/assets/white-skeleton.png">
     </div>
 
-    <div class="artists-gallery">
+    
       <div class="gallery-options">
           <input type="text" v-model="search" placeholder="Chercher un.e artiste">
       </div>
@@ -14,18 +16,22 @@
         <img src="@/assets/record-load.gif" alt="Loading...">
         <p class="loadingText">Loading...</p>
       </div>
-
+<div class="artists-gallery">
       <div class="test" v-for="artist in filteredArtists" :key="artist.id">
         <router-link :to="{name: 'eventsPage', params:{artistName: artist.name}}">
       <ArtistList :artist="artist"/>
       </router-link>
     </div>
     </div>
-  
+    <FooterBand>
+    </FooterBand>
   </div>  
 </template>
 
 <script>
+import HeaderBand from './Header.vue';
+import FooterBand from './Footer.vue';
+
 import ArtistList from '@/components/ArtistList.vue';
 import {artists, getAllData} from '@/services/api/artistsRepository.js';
 
@@ -33,7 +39,7 @@ import {artists, getAllData} from '@/services/api/artistsRepository.js';
 export default {
   name: 'ArtistsGallery',
   components: {
-    ArtistList,
+    ArtistList, HeaderBand,FooterBand,
   },
   data(){
     return{
@@ -67,6 +73,13 @@ export default {
 
 </script>
 <style scoped>
+@media screen and (min-width:769px) {
+.artists-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+} 
 
 .image-container{
  display: flex;
@@ -90,9 +103,5 @@ export default {
     height: 100px;
   }
 
- .artist-gallery{
-  height: 100vh ;
-  width: 100vw;
- }
 </style>
 

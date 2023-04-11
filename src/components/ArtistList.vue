@@ -16,11 +16,9 @@ export default {
 
 <style scoped>
 
-
-
 .artist{
-  float: left;
-  width: 21%;
+  display: inline-block; 
+  width: 100%;
   padding: 10px;
   margin: 20px;
   height: 250px;
@@ -35,7 +33,6 @@ export default {
 
 .artist h2{
   margin: 0;
-  font-size: 1.2 rem;
   white-space: nowrap;
   overflow:hidden;
   text-overflow: ellipsis;
