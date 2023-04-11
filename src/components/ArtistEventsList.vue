@@ -22,22 +22,19 @@ export default {
 
 <style scoped>
 .body{
-  flex-direction: row;
+  display:flex;
+  justify-content: center;
 }
 
+
 .event{
-  width: 25%;
-  height: 25%;
-  background-color: #000000;
-  align-items: center;
-  text-align: center;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  float: left;
+  width: 21%;
+  padding: 10px;
+  margin: 20px;
+  height: 250px;
+  position: relative;
+
 }
 .event:hover{
   filter: invert(1);

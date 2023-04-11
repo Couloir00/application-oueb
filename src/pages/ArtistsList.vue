@@ -1,6 +1,3 @@
-
-
-
 <template>
  <div>
   <h1> LES ARTISTES ! </h1>
@@ -29,7 +26,7 @@
 import ArtistEventsList from '@/components/ArtistEventsList.vue';
 import {getPhoebeEventData} from '@/services/api/artistsRepository.js';
 import ArtistList from '@/components/ArtistList.vue';
-import {getPhoebeData, getPvrisData, getClairoData, getDizzyData, getHayleyData, getBirdyData, getTaylorData} from '@/services/api/artistsRepository.js';
+import {getPhoebeData, getPvrisData, getClairoData, getDizzyData, getHayleyData, getBirdyData, getTaylorData, getIsaacData, getGreetingCommitteeData, getBoygeniusData} from '@/services/api/artistsRepository.js';
 
 
 export default {
@@ -64,6 +61,12 @@ export default {
       this.AllArtistsData.push(BirdyData);
       const TaylorData = await getTaylorData();
       this.AllArtistsData.push(TaylorData);
+      const BoygeniusData = await getBoygeniusData();
+      this.AllArtistsData.push(BoygeniusData);
+      const IsaacData = await getIsaacData();
+      this.AllArtistsData.push(IsaacData);
+      const GreetingCommitteeData = await getGreetingCommitteeData();
+      this.AllArtistsData.push(GreetingCommitteeData);
     },
     filterArtists(){
       return this.AllArtistsData.filter(artist=>artist.name.toLowerCase().includes(this.search.toLowerCase()));
