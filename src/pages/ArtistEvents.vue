@@ -1,6 +1,7 @@
 <template>
   <div class="events-gallery">
     <h1 class="name">All {{this.$route.params.artistName}} Events</h1>
+    <p v-show="AllData.length == 0">{{this.$route.params.artistName}} n'a pas de concert prévu pour le moment</p>
     <div class="gallery-options">
       <input type="text" v-model="search" placeholder="Chercher une ville">
     </div>

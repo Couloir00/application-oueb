@@ -99,6 +99,7 @@ a:hover {
 }
 
 @media screen and (max-width: 768px) {
+  /* for tablets*/
   .eventInfo {
     flex-direction: column;
     align-items: flex-start;
@@ -111,7 +112,8 @@ a:hover {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
+  /* for phones */
   .country {
     font-size: 1rem;
   }

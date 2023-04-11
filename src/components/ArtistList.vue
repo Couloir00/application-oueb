@@ -45,4 +45,18 @@ export default {
   filter: invert(1);
 }
 
+@media screen and (max-width:768px) {
+
+.artist{
+  float: center;
+  width: 75%;
+  padding: 10px;
+  margin: 20px;
+  height: 250px;
+  position: relative;
+}
+}
+
+
+
 </style>
