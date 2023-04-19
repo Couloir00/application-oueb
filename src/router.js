@@ -3,7 +3,6 @@ import HomePage from './pages/HomePage.vue'
 import ArtistsGallery from './pages/ArtistsList.vue'
 import EventsGallery from './pages/ArtistEvents.vue'
 
-
 const routes =[
     {path: '/', component: HomePage, name:"homePage"},
     {path: '/artists', component: ArtistsGallery, name:"artistsPage"},
