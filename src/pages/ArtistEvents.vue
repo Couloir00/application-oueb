@@ -3,29 +3,24 @@
 </HeaderBand>
     <h1 class="name">All {{this.$route.params.artistName}} Events</h1>
     <p v-show="AllData.length == 0">{{this.$route.params.artistName}} has no event scheduled at the moment</p>
+    
     <div class="gallery-options">
-      <input type="text" v-model="search" placeholder="Search a city">
-      <input type="text" v-model="city" placeholder="Enter a city name">
-    <button @click="convertCityNameToCoordinates">Get Coordinates</button>
-    <input type="range" min="0" max="500" step="10" v-model="radius" />
-    <p>Rayon : {{radius}} km</p>
-
+      <input type="text" v-model="city" placeholder="Enter a city name" @blur="convertCityNameToCoordinates" @keyup.enter="convertCityNameToCoordinates">
+      <input type="range" min="10" max="500" step="10" v-model="radius" />
+      <p>Rayon : {{radius}} km </p>
+      <p v-show="error">Error: City not found</p>
       <button @click="sortOrder = 'A to Z'">Alphabetic Sort Country/Cities</button>
       <button @click="sortOrder = ''">Reset Chronologic Sorting</button>
-      <button @click="isWithinRadius(calculateDistance(event.venue.latitude, event.venue.longitude), radius)">Calculate</button>
-    </div>
+      </div>
     <div class="events-gallery">
-    <div v-for="event in filteredEvents" :key="event.id">
-    <EventCard v-show="isWithinRadius(calculateDistance(event.venue.latitude, event.venue.longitude), radius)" :city="event.venue.city" :datetime="event.datetime" :tickets="event.offers" :country="event.venue.country"/>
-  <!-- <EventCard v-if="isWithinRadius(calculateDistance(event.venue.latitude, event.venue.longitude), radius)" :city="event.venue.city" :datetime="event.datetime" :tickets="event.offers" :country="event.venue.country"/> -->
- </div>
-    
-  </div>
+      <div v-for="event in filteredEvents" :key="event.id">
+        <EventCard :city="event.venue.city" :datetime="event.datetime" :tickets="event.offers" :country="event.venue.country"/>   
+      </div>
+    </div>
 </template>
 
 <script>
-import HeaderBand from './Header.vue';
-
+  import HeaderBand from './Header.vue';
   import EventCard from '@/components/ArtistEventsList.vue';
   import {getEventsData} from '@/services/api/artistsRepository.js';
   
@@ -37,13 +32,13 @@ import HeaderBand from './Header.vue';
   data(){
     return{
       AllData:{},
-      search: '',
       sortOrder: '',
-      radius:0,
+      radius:10,
       distance: null,
       city:'',
       latitude: null,
       longitude: null,
+      error: false
       
     };
   },
@@ -54,9 +49,19 @@ import HeaderBand from './Header.vue';
     async retrieveEventsData(){
        this.AllData = await getEventsData(this.$route.params.artistName);      
     },
-    filterEvents(){
-       return Object.values(this.AllData).filter(event=>event.venue.city.toLowerCase().includes(this.search.toLowerCase()) || event.venue.country.toLowerCase().includes(this.search.toLowerCase()));
-    },
+    filterEventsByRadius() {
+      const filteredEvents = Object.values(this.AllData);
+  if (!this.city) {
+    return filteredEvents;
+  }
+  
+  const eventsWithinRadius = filteredEvents.filter(event => {
+    const distance = this.calculateDistance(event.venue.latitude, event.venue.longitude);
+    return this.isWithinRadius(distance, this.radius);
+  });
+  return eventsWithinRadius;
+},
+
      sortEvents(events) {
       if (this.sortOrder === 'A to Z') {
         return events.sort((a, b) => {
@@ -72,10 +77,16 @@ import HeaderBand from './Header.vue';
       }
     },
     async convertCityNameToCoordinates() {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${this.city}&format=json&limit=1`);
-      const data = await response.json();
-      this.latitude = data[0].lat;
-      this.longitude = data[0].lon;
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${this.city}&format=json&limit=1`);
+        const data = await response.json();
+        this.latitude = data[0].lat;
+        this.longitude = data[0].lon;
+        this.error = false;
+      } catch (error) {
+        console.error(error);
+        this.error = true;
+      }
     },
     calculateDistance(eventLatitude,eventLongitude){
       const earthRadius = 6371;
@@ -101,8 +112,8 @@ import HeaderBand from './Header.vue';
     filteredEvents(){
       let events = Object.values(this.AllData) 
       
-      if(this.search !== ""){
-        events = this.filterEvents();
+      if(this.city !== ""){
+        events = this.filterEventsByRadius();
       }
       return this.sortEvents(events);
     }

@@ -18,7 +18,7 @@ export default {
 
 .artist{
   display: inline-block; 
-  width: 100%;
+  width: 80%;
   padding: 10px;
   margin: 20px;
   height: 250px;
