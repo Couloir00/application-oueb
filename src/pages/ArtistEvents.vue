@@ -1,21 +1,22 @@
 <template>
-<HeaderBand>
-</HeaderBand>
+  <HeaderBand>
+  </HeaderBand>
     <h1 class="name">All {{this.$route.params.artistName}} Events</h1>
     <p v-show="AllData.length == 0">{{this.$route.params.artistName}} has no event scheduled at the moment</p>
-    
+      
     <div class="gallery-options">
       <input type="text" v-model="city" placeholder="Enter a city name" @blur="convertCityNameToCoordinates" @keyup.enter="convertCityNameToCoordinates">
-      <input type="range" min="10" max="500" step="10" v-model="radius" />
+      <input type="range" min="10" max="1000" step="10" v-model="radius" />
       <p>Rayon : {{radius}} km </p>
       <p v-show="error">Error: City not found</p>
-      <button @click="sortOrder = 'A to Z'">Alphabetic Sort Country/Cities</button>
-      <button @click="sortOrder = ''">Reset Chronologic Sorting</button>
-      </div>
+      <button :class="{ active: sortOrder === 'A to Z' }" @click="sortOrder = 'A to Z'">Alphabetic Sort Country/Cities</button>
+      <button :class="{ active: sortOrder === 'Distance' }" @click="sortOrder = 'Distance'">Sort by Distance</button>
+      <button :class="{ active: sortOrder === '' }" @click="sortOrder = ''">Reset Chronologic Sorting</button>
+      <br>
+      <br>
+    </div>
     <div class="events-gallery">
-      <div v-for="event in filteredEvents" :key="event.id">
-        <EventCard :city="event.venue.city" :datetime="event.datetime" :tickets="event.offers" :country="event.venue.country"/>   
-      </div>
+      <EventCard v-for="event in filteredEvents" :key="event.id" :city="event.venue.city" :datetime="event.datetime" :tickets="event.offers" :country="event.venue.country"/>   
     </div>
 </template>
 
@@ -33,7 +34,7 @@
     return{
       AllData:{},
       sortOrder: '',
-      radius:10,
+      radius:100,
       distance: null,
       city:'',
       latitude: null,
@@ -71,7 +72,17 @@
           if (a.venue.city > b.venue.city) return 1;
           return 0;
         });
-      } else if (this.sortOrder === '') {
+      } 
+      else if (this.sortOrder === 'Distance') {
+        return events.sort((a, b) => {
+          const distanceA = this.calculateDistance(a.venue.latitude, a.venue.longitude);
+          const distanceB = this.calculateDistance(b.venue.latitude, b.venue.longitude);
+          if (distanceA < distanceB) return -1;
+          if (distanceA > distanceB) return 1;
+          return 0;
+        });
+      }
+      else if (this.sortOrder === '') {
         // Lorsque "Reset Sorting" est cliqué, sortOrder est défini sur une chaîne vide, ce qui entraîne la sortie des données brutes sans tri.
         return events;
       }
@@ -102,7 +113,14 @@
       const haversineFinal = 2 * Math.atan2(Math.sqrt(haversineIntermediate), Math.sqrt(1 - haversineIntermediate));
       //convert the distance in kilometer
       const distance = earthRadius * haversineFinal;
-      return distance.toFixed(2);
+      if (distance <=70){
+        const x = dLat * earthRadius;
+        const y = dLon * earthRadius * Math.cos(this.latitude * (Math.PI / 180));
+        return Math.sqrt(x * x + y * y);
+      }
+      else{return distance.toFixed(2);}
+
+      
     },
     isWithinRadius(distance, radius) {
   return parseFloat(distance) <= parseFloat(radius);
@@ -133,6 +151,11 @@ body {
 }
 .image:hover{
   filter: invert(1);
+}
+
+button.active {
+  background-color: #333;
+  color: #fff;
 }
 
 input[type="text"] {
