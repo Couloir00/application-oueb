@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import HeaderBand from "./Header.vue";
-import FooterBand from "./Footer.vue";
+import HeaderBand from "@/components/Header.vue";
+import FooterBand from "@/components/Footer.vue";
 
 import ArtistList from "@/components/ArtistList.vue";
 import { artists, getAllData } from "@/services/api/artistsRepository.js";

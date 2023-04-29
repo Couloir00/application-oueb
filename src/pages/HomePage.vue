@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import HeaderBand from "./Header.vue";
-import FooterBand from "./Footer.vue";
+import HeaderBand from "@/components/Header.vue";
+import FooterBand from "@/components/Footer.vue";
 export default {
   name: "HomePage",
   components: {

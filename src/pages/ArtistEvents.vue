@@ -44,10 +44,13 @@
       :country="event.venue.country"
     />
   </div>
+  <FooterBand> </FooterBand>
 </template>
 
 <script>
-import HeaderBand from "./Header.vue";
+import HeaderBand from "@/components/Header.vue";
+import FooterBand from "@/components/Footer.vue";
+
 import EventCard from "@/components/ArtistEventsList.vue";
 import { getEventsData } from "@/services/api/artistsRepository.js";
 
@@ -56,14 +59,15 @@ export default {
   components: {
     EventCard,
     HeaderBand,
+    FooterBand,
   },
   data() {
     return {
       AllData: {},
       sortOrder: "",
-      radius: 100,
+      radius: localStorage.getItem("radius") || 100,
       distance: null,
-      city: "",
+      city: localStorage.getItem("city") || "",
       latitude: null,
       longitude: null,
       error: false,
@@ -174,6 +178,14 @@ export default {
         events = this.filterEventsByRadius();
       }
       return this.sortEvents(events);
+    },
+  },
+  watch: {
+    city: function (newCity) {
+      localStorage.setItem("city", newCity);
+    },
+    radius: function (newRadius) {
+      localStorage.setItem("radius", newRadius);
     },
   },
 };

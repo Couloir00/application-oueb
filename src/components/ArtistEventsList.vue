@@ -31,10 +31,7 @@ export default {
       const ticketOffer = this.tickets.find(
         (offer) => offer.type === "Tickets"
       );
-      if (ticketOffer) {
-        return ticketOffer.url;
-      }
-      return null;
+      return ticketOffer ? ticketOffer.url : null;
     },
     ticketAvailable() {
       return this.tickets.some((offer) => offer.status === "available");
