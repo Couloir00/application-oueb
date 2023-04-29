@@ -1,18 +1,18 @@
 <template>
   <div class="eventCard">
     <div class="eventInfo">
-      <h2 class="country">{{country}}</h2>
-      <p class="city">{{city}}</p>
-      <p class="datetime">{{formattedDate}}</p>
-
-      <a v-if="ticketAvailable" :href="ticketUrl" target="_blank">Get Tickets</a>
+      <h2 class="country">{{ country }}</h2>
+      <p class="city">{{ city }}</p>
+      <p class="datetime">{{ formattedDate }}</p>
+      <a v-if="ticketAvailable" :href="ticketUrl" target="_blank">
+        Get Tickets
+      </a>
       <p v-else>Sold out</p>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "EventCard",
   props: {
@@ -21,30 +21,29 @@ export default {
     tickets: Object,
     country: String,
   },
-  computed:{
-    formattedDate(){
-      const dateObj = new Date(this.datetime)
-      const options = { day: 'numeric', month: 'short', year: 'numeric' }
-      return dateObj.toLocaleDateString('en-US', options)
+  computed: {
+    formattedDate() {
+      const dateObj = new Date(this.datetime);
+      const options = { day: "numeric", month: "short", year: "numeric" };
+      return dateObj.toLocaleDateString("en-US", options);
     },
-    ticketUrl(){
-     const ticketOffer = this.tickets.find(offer=>offer.type ==='Tickets');
-      if(ticketOffer){
+    ticketUrl() {
+      const ticketOffer = this.tickets.find(
+        (offer) => offer.type === "Tickets"
+      );
+      if (ticketOffer) {
         return ticketOffer.url;
       }
       return null;
     },
-    ticketAvailable(){
-      return this.tickets.some(offer=>offer.status ==='available');
-    }
+    ticketAvailable() {
+      return this.tickets.some((offer) => offer.status === "available");
+    },
   },
-}
-
-
+};
 </script>
 
 <style scoped>
-
 .eventCard {
   display: flex;
   justify-content: center;
@@ -74,11 +73,10 @@ export default {
 .city,
 .venue,
 .datetime {
-  margin-right:20px;
+  margin-right: 20px;
   margin-top: 5px;
   margin-left: 10px;
 }
-
 
 a {
   margin-top: 10px;
@@ -104,7 +102,7 @@ a:hover {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .city,
   .venue,
   .datetime {
@@ -117,25 +115,22 @@ a:hover {
   .country {
     font-size: 1rem;
   }
-  
+
   .eventInfo {
     margin: 0;
     border-radius: 0;
   }
-  
+
   .city,
   .venue,
   .datetime {
     font-size: 0.8rem;
     margin-top: 3px;
   }
-  
+
   a {
     margin-top: 5px;
     font-size: 0.8rem;
   }
 }
-
 </style>
-
-

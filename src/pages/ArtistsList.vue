@@ -1,107 +1,107 @@
 <template>
- <div>
-  <HeaderBand>
-    </HeaderBand>
-  <h1> LES ARTISTES ! </h1>
+  <div>
+    <HeaderBand> </HeaderBand>
+    <h1>LES ARTISTES !</h1>
     <div class="image-container">
-      <img class="image" src="@/assets/white-skeleton.png">
+      <img class="image" src="@/assets/white-skeleton.png" />
     </div>
 
-    
-      <div class="gallery-options">
-          <input type="text" v-model="search" placeholder="Chercher un.e artiste">
-      </div>
+    <div class="gallery-options">
+      <input type="text" v-model="search" placeholder="Chercher un.e artiste" />
+    </div>
 
-      <div v-if="isLoading" class="loading">
-        <img src="@/assets/record-load.gif" alt="Loading...">
-        <p class="loadingText">Loading...</p>
-      </div>
-<div class="artists-gallery">
+    <div v-if="isLoading" class="loading">
+      <img src="@/assets/record-load.gif" alt="Loading..." />
+      <p class="loadingText">Loading...</p>
+    </div>
+    <div class="artists-gallery">
       <div class="test" v-for="artist in filteredArtists" :key="artist.id">
-        <router-link :to="{name: 'eventsPage', params:{artistName: artist.name}}">
-      <ArtistList :artist="artist"/>
-      </router-link>
+        <router-link
+          :to="{ name: 'eventsPage', params: { artistName: artist.name } }"
+        >
+          <ArtistList :artist="artist" />
+        </router-link>
+      </div>
     </div>
-    </div>
-    <FooterBand>
-    </FooterBand>
-  </div>  
+    <FooterBand> </FooterBand>
+  </div>
 </template>
 
 <script>
-import HeaderBand from './Header.vue';
-import FooterBand from './Footer.vue';
+import HeaderBand from "./Header.vue";
+import FooterBand from "./Footer.vue";
 
-import ArtistList from '@/components/ArtistList.vue';
-import {artists, getAllData} from '@/services/api/artistsRepository.js';
-
+import ArtistList from "@/components/ArtistList.vue";
+import { artists, getAllData } from "@/services/api/artistsRepository.js";
 
 export default {
-  name: 'ArtistsGallery',
+  name: "ArtistsGallery",
   components: {
-    ArtistList, HeaderBand,FooterBand,
+    ArtistList,
+    HeaderBand,
+    FooterBand,
   },
-  data(){
-    return{
-      AllArtistsData:{},
+  data() {
+    return {
+      AllArtistsData: {},
       search: "",
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
-  created(){
+  created() {
     this.retrieveArtistsData();
   },
   methods: {
-    async retrieveArtistsData(){
+    async retrieveArtistsData() {
       this.isLoading = true;
       const AllData = await getAllData(artists);
       this.AllArtistsData = AllData;
       console.log(this.AllArtistsData);
       this.isLoading = false;
     },
-     filterArtists(){
-      return Object.values(this.AllArtistsData).filter(artist=>artist.name.toLowerCase().includes(this.search.toLowerCase()));
+    filterArtists() {
+      return Object.values(this.AllArtistsData).filter((artist) =>
+        artist.name.toLowerCase().includes(this.search.toLowerCase())
+      );
     },
   },
-  computed:{
-    filteredArtists(){
-      return this.search === ""? Object.values(this.AllArtistsData):this.filterArtists();
-    }
+  computed: {
+    filteredArtists() {
+      return this.search === ""
+        ? Object.values(this.AllArtistsData)
+        : this.filterArtists();
+    },
+  },
+};
+</script>
+<style scoped>
+@media screen and (min-width: 769px) {
+  .artists-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
   }
 }
 
-
-</script>
-<style scoped>
-@media screen and (min-width:769px) {
-.artists-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 75%;
 }
-} 
-
-.image-container{
- display: flex;
- justify-content: center;
- margin:0 auto;
- width: 75%;
-}
-.image{
+.image {
   width: 100%;
   height: auto;
 }
-  .loading{
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    height:80vh;
-  }
-  .loading img{
-    width:100px;
-    height: 100px;
-  }
-
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.loading img {
+  width: 100px;
+  height: 100px;
+}
 </style>
-

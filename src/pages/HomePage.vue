@@ -1,29 +1,27 @@
 <template>
   <div>
-    <HeaderBand>
-    </HeaderBand>
+    <HeaderBand> </HeaderBand>
     <main>
       <h1>WE ARE INDIE BANGERZZZ</h1>
       <p>WE. ARE. INDIE.</p>
     </main>
-    <FooterBand>
-    </FooterBand>
+    <FooterBand> </FooterBand>
   </div>
 </template>
 
 <script>
-import HeaderBand from './Header.vue';
-import FooterBand from './Footer.vue';
+import HeaderBand from "./Header.vue";
+import FooterBand from "./Footer.vue";
 export default {
-  name: 'HomePage',
+  name: "HomePage",
   components: {
-    HeaderBand,FooterBand
+    HeaderBand,
+    FooterBand,
   },
 };
 </script>
 
 <style>
-
 header {
   background-color: #333;
   color: white;

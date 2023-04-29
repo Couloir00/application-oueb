@@ -1,24 +1,25 @@
 <template>
-    <div>
-        <header>
+  <div>
+    <header>
       <nav>
         <ul>
-          <li><router-link :to="{name: 'homePage'}">Accueil</router-link></li>
-          <li><router-link :to="{name: 'artistsPage'}">Artists</router-link></li>
+          <li><router-link :to="{ name: 'homePage' }">Accueil</router-link></li>
+          <li>
+            <router-link :to="{ name: 'artistsPage' }">Artists</router-link>
+          </li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
     </header>
-    </div>
+  </div>
 </template>
-  
+
 <script>
 export default {
-  name: 'HeaderBand'
-}
+  name: "HeaderBand",
+};
 </script>
 <style>
-
 header {
   background-color: #333;
   color: white;

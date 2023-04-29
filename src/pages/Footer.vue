@@ -1,18 +1,17 @@
 <template>
-    <div>
-        <footer>
+  <div>
+    <footer>
       <p>Tous droits réservés © 2023 Indie Bangerzzz</p>
     </footer>
-    </div>
+  </div>
 </template>
-  
+
 <script>
 export default {
-  name: 'FooterBand'
-}
+  name: "FooterBand",
+};
 </script>
 <style>
-
 footer {
   background-color: #333;
   color: white;
@@ -20,4 +19,3 @@ footer {
   padding: 10px;
 }
 </style>
-
