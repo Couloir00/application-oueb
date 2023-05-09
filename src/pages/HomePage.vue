@@ -1,23 +1,15 @@
 <template>
   <div>
-    <HeaderBand> </HeaderBand>
     <main>
       <h1>WE ARE INDIE BANGERZZZ</h1>
       <p>WE. ARE. INDIE.</p>
     </main>
-    <FooterBand> </FooterBand>
   </div>
 </template>
 
 <script>
-import HeaderBand from "@/components/Header.vue";
-import FooterBand from "@/components/Footer.vue";
 export default {
   name: "HomePage",
-  components: {
-    HeaderBand,
-    FooterBand,
-  },
 };
 </script>
 

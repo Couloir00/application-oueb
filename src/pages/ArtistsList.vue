@@ -1,6 +1,5 @@
 <template>
   <div>
-    <HeaderBand> </HeaderBand>
     <h1>LES ARTISTES !</h1>
     <div class="image-container">
       <img class="image" src="@/assets/white-skeleton.png" />
@@ -23,14 +22,10 @@
         </router-link>
       </div>
     </div>
-    <FooterBand> </FooterBand>
   </div>
 </template>
 
 <script>
-import HeaderBand from "@/components/Header.vue";
-import FooterBand from "@/components/Footer.vue";
-
 import ArtistList from "@/components/ArtistList.vue";
 import { artists, getAllData } from "@/services/api/artistsRepository.js";
 
@@ -38,8 +33,6 @@ export default {
   name: "ArtistsGallery",
   components: {
     ArtistList,
-    HeaderBand,
-    FooterBand,
   },
   data() {
     return {

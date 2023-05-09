@@ -1,5 +1,4 @@
 <template>
-  <HeaderBand> </HeaderBand>
   <h1 class="name">All {{ this.$route.params.artistName }} Events</h1>
   <p v-show="AllData.length == 0">
     {{ this.$route.params.artistName }} has no event scheduled at the moment
@@ -16,21 +15,10 @@
     <input type="range" min="10" max="1000" step="10" v-model="radius" />
     <p>Rayon : {{ radius }} km</p>
     <p v-show="error">Error: City not found</p>
-    <button
-      :class="{ active: sortOrder === 'A to Z' }"
-      @click="sortOrder = 'A to Z'"
-    >
-      Alphabetic Sort Country/Cities
-    </button>
-    <button
-      :class="{ active: sortOrder === 'Distance' }"
-      @click="sortOrder = 'Distance'"
-    >
-      Sort by Distance
-    </button>
-    <button :class="{ active: sortOrder === '' }" @click="sortOrder = ''">
-      Reset Chronologic Sorting
-    </button>
+    <SortComponent
+      v-model:actualSort="sortOrder"
+      @update:actualSort="sortOrder = $event"
+    />
     <br />
     <br />
   </div>
@@ -44,27 +32,24 @@
       :country="event.venue.country"
     />
   </div>
-  <FooterBand> </FooterBand>
 </template>
 
 <script>
-import HeaderBand from "@/components/Header.vue";
-import FooterBand from "@/components/Footer.vue";
-
 import EventCard from "@/components/ArtistEventsList.vue";
 import { getEventsData } from "@/services/api/artistsRepository.js";
+import SortComponent from "@/components/SortComponent.vue";
+import { calculateDistance, isWithinRadius } from "@/services/api/utils.js";
 
 export default {
   name: "EventsGallery",
   components: {
     EventCard,
-    HeaderBand,
-    FooterBand,
+    SortComponent,
   },
   data() {
     return {
-      AllData: {},
       sortOrder: "",
+      AllData: {},
       radius: localStorage.getItem("radius") || 100,
       distance: null,
       city: localStorage.getItem("city") || "",
@@ -75,22 +60,27 @@ export default {
   },
   created() {
     this.retrieveEventsData();
+    calculateDistance();
+    isWithinRadius();
   },
   methods: {
     async retrieveEventsData() {
       this.AllData = await getEventsData(this.$route.params.artistName);
     },
+
     filterEventsByRadius() {
       const filteredEvents = Object.values(this.AllData);
       if (!this.city) {
         return filteredEvents;
       }
       const eventsWithinRadius = filteredEvents.filter((event) => {
-        const distance = this.calculateDistance(
+        const distance = calculateDistance(
           event.venue.latitude,
-          event.venue.longitude
+          event.venue.longitude,
+          this.latitude,
+          this.longitude
         );
-        return this.isWithinRadius(distance, this.radius);
+        return isWithinRadius(distance, this.radius);
       });
       return eventsWithinRadius;
     },
@@ -106,13 +96,17 @@ export default {
         });
       } else if (this.sortOrder === "Distance") {
         return events.sort((a, b) => {
-          const distanceA = this.calculateDistance(
+          const distanceA = calculateDistance(
             a.venue.latitude,
-            a.venue.longitude
+            a.venue.longitude,
+            this.latitude,
+            this.longitude
           );
-          const distanceB = this.calculateDistance(
+          const distanceB = calculateDistance(
             b.venue.latitude,
-            b.venue.longitude
+            b.venue.longitude,
+            this.latitude,
+            this.longitude
           );
           if (distanceA < distanceB) return -1;
           if (distanceA > distanceB) return 1;
@@ -136,38 +130,6 @@ export default {
         console.error(error);
         this.error = true;
       }
-    },
-    calculateDistance(eventLatitude, eventLongitude) {
-      const earthRadius = 6371;
-      //convert degrees to radian
-      const dLat = (this.latitude - eventLatitude) * (Math.PI / 180);
-      const dLon = (this.longitude - eventLongitude) * (Math.PI / 180);
-      //first part of the haversine formula
-      const haversineIntermediate =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos(eventLatitude * (Math.PI / 180)) *
-          Math.cos(this.latitude * (Math.PI / 180)) *
-          Math.sin(dLon / 2) ** 2;
-      //second part of the haversine formula
-      const haversineFinal =
-        2 *
-        Math.atan2(
-          Math.sqrt(haversineIntermediate),
-          Math.sqrt(1 - haversineIntermediate)
-        );
-      //convert the distance in kilometer
-      const distance = earthRadius * haversineFinal;
-      if (distance <= 70) {
-        const x = dLat * earthRadius;
-        const y =
-          dLon * earthRadius * Math.cos(this.latitude * (Math.PI / 180));
-        return Math.sqrt(x * x + y * y);
-      } else {
-        return distance.toFixed(2);
-      }
-    },
-    isWithinRadius(distance, radius) {
-      return parseFloat(distance) <= parseFloat(radius);
     },
   },
   computed: {
@@ -204,12 +166,6 @@ body {
 .image:hover {
   filter: invert(1);
 }
-
-button.active {
-  background-color: #333;
-  color: #fff;
-}
-
 input[type="text"] {
   padding: 10px;
   border-radius: 10px;

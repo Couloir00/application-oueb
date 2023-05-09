@@ -1,28 +1,18 @@
 <template>
   <div>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <router-link :to="{ name: 'homePage' }">Accueil</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'artistsPage' }">Artists</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'contactPage' }">Contact</router-link>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <main>
+      <h1>WE ARE INDIE BANGERZZZ</h1>
+      <p>OUR EMAIL LIST</p>
+    </main>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HeaderBand",
+  name: "ContactPage",
 };
 </script>
+
 <style>
 header {
   background-color: #333;
@@ -51,5 +41,16 @@ nav li a {
 
 nav li a:hover {
   background-color: #111;
+}
+
+main {
+  margin: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
 }
 </style>
