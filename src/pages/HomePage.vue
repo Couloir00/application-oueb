@@ -36,38 +36,12 @@ export default {
 
 <style>
 main {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-}
-
-header {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  /* Styles du header */
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  /* Styles du footer */
+  height: 100vh;
 }
 
 .background-image {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  height: 100%;
   background-image: url("@/assets/home-pic.jpg");
   background-size: cover;
   background-position: center;
@@ -95,8 +69,7 @@ footer {
 
 @media (max-width: 768px) {
   .word {
-    font-size: 15vw;
-    margin-top: 10px;
+    font-size: 14vw;
   }
   .text-animation {
     position: absolute;

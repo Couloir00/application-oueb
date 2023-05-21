@@ -30,28 +30,38 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 main {
   margin: 20px;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .contact-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .contact-image {
   width: 50%;
-  background-image: url("@/assets/FLPARIS23.png");
+  background-image: url("@/assets/pvris.jpg");
   background-size: cover;
   background-position: center;
-  height: 60vh; /* Adjust the height as needed */
+  height: 100%; /* Utilise la hauteur du conteneur parent */
 }
 
 .contact-form {
   width: 50%;
   padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Utilise la hauteur du conteneur parent */
+  margin: auto;
+  overflow: auto;
 }
 
 @media (max-width: 768px) {
@@ -61,12 +71,12 @@ main {
 
   .contact-image {
     width: 100%;
-    height: 100px; /* Adjust the height as needed */
+    height: 20vh; /* Ajustez la hauteur selon vos besoins */
   }
 
   .contact-form {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 50px; /* Ajustez la marge supérieure selon vos besoins */
   }
 }
 </style>

@@ -1,12 +1,16 @@
 <template>
-  <div>
-    <h1>LES ARTISTES !</h1>
-    <div class="image-container">
-      <img class="image" src="@/assets/white-skeleton.png" />
-    </div>
-
-    <div class="gallery-options">
-      <input type="text" v-model="search" placeholder="Chercher un.e artiste" />
+  <div class="artists-gallery-container">
+    <div class="background-image">
+      <div class="image-overlay">
+        <h1>LES ARTISTES !</h1>
+        <div class="gallery-options">
+          <input
+            type="text"
+            v-model="search"
+            placeholder="Chercher un.e artiste"
+          />
+        </div>
+      </div>
     </div>
 
     <div v-if="isLoading" class="loading">
@@ -68,6 +72,44 @@ export default {
 };
 </script>
 <style scoped>
+.artists-gallery-container {
+  position: relative;
+}
+
+.background-image {
+  position: relative;
+  background-image: url("@/assets/FLPARIS23.png");
+  background-size: cover;
+  background-position: center;
+  height: 30vh;
+}
+.image-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.image-overlay h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.gallery-options {
+  margin-top: 20px;
+}
+
+.gallery-options input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 @media screen and (min-width: 769px) {
   .artists-gallery {
     display: grid;
