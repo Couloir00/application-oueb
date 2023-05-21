@@ -1,7 +1,7 @@
 <template>
   <div>
     <footer>
-      <p>Tous droits réservés © 2023 Indie Bangerzzz</p>
+      <p>2023 Indie Bangerzzz © All rights reserved.</p>
     </footer>
   </div>
 </template>

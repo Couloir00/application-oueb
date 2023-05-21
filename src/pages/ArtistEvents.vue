@@ -5,16 +5,10 @@
   </p>
 
   <div class="gallery-options">
-    <input
-      type="text"
-      v-model="city"
-      placeholder="Enter a city name"
-      @blur="convertCityNameToCoordinates"
-      @keyup.enter="convertCityNameToCoordinates"
+    <CityCoordinates
+      @coordinates-updated="updateCoordinates"
+      @radius-updated="updateRadius"
     />
-    <input type="range" min="10" max="1000" step="10" v-model="radius" />
-    <p>Rayon : {{ radius }} km</p>
-    <p v-show="error">Error: City not found</p>
     <SortComponent
       v-model:actualSort="sortOrder"
       @update:actualSort="sortOrder = $event"
@@ -38,13 +32,15 @@
 import EventCard from "@/components/ArtistEventsList.vue";
 import { getEventsData } from "@/services/api/artistsRepository.js";
 import SortComponent from "@/components/SortComponent.vue";
-import { calculateDistance, isWithinRadius } from "@/services/api/utils.js";
-
+import { estimateDistance, isWithinRadius } from "@/services/api/Maths.js";
+import CityCoordinates from "@/components/CityCoordinates.vue";
+import { sortEvents } from "@/services/api/EventsSorting.js";
 export default {
   name: "EventsGallery",
   components: {
     EventCard,
     SortComponent,
+    CityCoordinates,
   },
   data() {
     return {
@@ -60,21 +56,31 @@ export default {
   },
   created() {
     this.retrieveEventsData();
-    calculateDistance();
+  },
+  mounted() {
+    estimateDistance();
     isWithinRadius();
   },
   methods: {
     async retrieveEventsData() {
       this.AllData = await getEventsData(this.$route.params.artistName);
     },
+    updateRadius(radius) {
+      this.radius = radius;
+    },
+    updateCoordinates({ latitude, longitude, radius }) {
+      this.latitude = latitude;
+      this.longitude = longitude;
+      this.radius = radius;
+    },
 
     filterEventsByRadius() {
       const filteredEvents = Object.values(this.AllData);
-      if (!this.city) {
+      if (!this.city || this.latitude === null) {
         return filteredEvents;
       }
       const eventsWithinRadius = filteredEvents.filter((event) => {
-        const distance = calculateDistance(
+        const distance = estimateDistance(
           event.venue.latitude,
           event.venue.longitude,
           this.latitude,
@@ -86,50 +92,7 @@ export default {
     },
 
     sortEvents(events) {
-      if (this.sortOrder === "A to Z") {
-        return events.sort((a, b) => {
-          if (a.venue.country < b.venue.country) return -1;
-          if (a.venue.country > b.venue.country) return 1;
-          if (a.venue.city < b.venue.city) return -1;
-          if (a.venue.city > b.venue.city) return 1;
-          return 0;
-        });
-      } else if (this.sortOrder === "Distance") {
-        return events.sort((a, b) => {
-          const distanceA = calculateDistance(
-            a.venue.latitude,
-            a.venue.longitude,
-            this.latitude,
-            this.longitude
-          );
-          const distanceB = calculateDistance(
-            b.venue.latitude,
-            b.venue.longitude,
-            this.latitude,
-            this.longitude
-          );
-          if (distanceA < distanceB) return -1;
-          if (distanceA > distanceB) return 1;
-          return 0;
-        });
-      } else if (this.sortOrder === "") {
-        // Lorsque "Reset Sorting" est cliqué, sortOrder est défini sur une chaîne vide, ce qui entraîne la sortie des données brutes sans tri.
-        return events;
-      }
-    },
-    async convertCityNameToCoordinates() {
-      try {
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${this.city}&format=json&limit=1`
-        );
-        const data = await response.json();
-        this.latitude = data[0].lat;
-        this.longitude = data[0].lon;
-        this.error = false;
-      } catch (error) {
-        console.error(error);
-        this.error = true;
-      }
+      return sortEvents(events, this.sortOrder, this.latitude, this.longitude);
     },
   },
   computed: {
@@ -140,14 +103,6 @@ export default {
         events = this.filterEventsByRadius();
       }
       return this.sortEvents(events);
-    },
-  },
-  watch: {
-    city: function (newCity) {
-      localStorage.setItem("city", newCity);
-    },
-    radius: function (newRadius) {
-      localStorage.setItem("radius", newRadius);
     },
   },
 };
