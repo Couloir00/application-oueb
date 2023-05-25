@@ -22,6 +22,7 @@
       :key="event.id"
       :city="event.venue.city"
       :datetime="event.datetime"
+      :venue="event.venue.name"
       :tickets="event.offers"
       :country="event.venue.country"
     />
@@ -134,10 +135,23 @@ input[type="text"] {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #ff4118;
+  color: #f0b058;
   margin-top: 60px;
 }
 
-/* Charger la police de Google Fonts */
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+.button {
+  flex: 0 0 auto;
+  margin: 5px;
+  background-color: #f5cf9b;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #f0b058;
+}
 </style>

@@ -46,14 +46,27 @@ export default {
     };
   },
   created() {
-    this.retrieveArtistsData();
+    if (Object.keys(this.AllArtistsData).length === 0) {
+      // Verify if artists data were already retrieved
+      this.retrieveArtistsData();
+    }
   },
   methods: {
     async retrieveArtistsData() {
       this.isLoading = true;
-      const AllData = await getAllData(artists);
-      this.AllArtistsData = AllData;
-      console.log(this.AllArtistsData);
+      try {
+        // Verify if data are in cache
+        const cachedData = localStorage.getItem("artistsData");
+        if (cachedData) {
+          this.AllArtistsData = JSON.parse(cachedData);
+        } else {
+          const AllData = await getAllData(artists);
+          this.AllArtistsData = AllData;
+          localStorage.setItem("artistsData", JSON.stringify(AllData));
+        }
+      } catch (error) {
+        console.error(error);
+      }
       this.isLoading = false;
     },
     filterArtists() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <input type="text" v-model="city" placeholder="Enter a city name" />
-    <button @click="getCoordinates">Get Coordinates</button>
+    <a @click="getCoordinates" class="button">Get Coordinates</a>
     <p v-show="error">Error: City not found</p>
     <input
       type="range"
@@ -10,6 +10,7 @@
       step="10"
       v-model="radius"
       @input="updateRadius"
+      class="slider"
     />
     <p>Rayon : {{ radius }} km</p>
   </div>
@@ -35,7 +36,7 @@ export default {
     async getCoordinates() {
       try {
         if (!this.city) {
-          // Si aucune ville n'est spécifiée, émettre simplement les coordonnées vides
+          // If no city is specified, simply emit empty coordinates
           this.$emit("coordinates-updated", {
             latitude: null,
             longitude: null,
@@ -67,3 +68,37 @@ export default {
   },
 };
 </script>
+
+<style>
+input.slider {
+  -webkit-appearance: none;
+  height: 8px;
+  border-radius: 5px;
+  background: #f5cf9b;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+input.slider:hover {
+  opacity: 1;
+}
+
+input.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f0b058;
+  cursor: pointer;
+}
+
+input.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f0b058;
+  cursor: pointer;
+}
+</style>

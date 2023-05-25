@@ -7,14 +7,20 @@
           <h1>CONTACT US</h1>
           <p>For any questions or inquiries, please fill out the form below:</p>
           <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required />
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required />
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required />
+            </div>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
+            <div class="form-group">
+              <label for="message">Message:</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
 
             <button type="submit">Send</button>
           </form>
@@ -48,7 +54,7 @@ main {
   background-image: url("@/assets/pvris.jpg");
   background-size: cover;
   background-position: center;
-  height: 100%; /* Utilise la hauteur du conteneur parent */
+  height: 100%;
 }
 
 .contact-form {
@@ -59,9 +65,53 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Utilise la hauteur du conteneur parent */
+  height: 100%;
   margin: auto;
   overflow: auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  height: 150px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  resize: vertical;
+}
+
+button[type="submit"] {
+  background-color: #f5cf9b;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:hover {
+  background-color: #f0b058;
 }
 
 @media (max-width: 768px) {
@@ -71,12 +121,12 @@ main {
 
   .contact-image {
     width: 100%;
-    height: 20vh; /* Ajustez la hauteur selon vos besoins */
+    height: 20vh;
   }
 
   .contact-form {
     width: 100%;
-    margin-top: 50px; /* Ajustez la marge supérieure selon vos besoins */
+    margin-top: 50px;
   }
 }
 </style>

@@ -1,13 +1,25 @@
 <template>
   <div class="eventCard">
     <div class="eventInfo">
-      <h2 class="country">{{ country }}</h2>
-      <p class="city">{{ city }}</p>
-      <p class="datetime">{{ formattedDate }}</p>
-      <a v-if="ticketAvailable" :href="ticketUrl" target="_blank">
-        Get Tickets
-      </a>
-      <p v-else>Sold out</p>
+      <div class="header">
+        <h2 class="datetime">{{ formattedDate }}</h2>
+        <h3 class="country">{{ country }}</h3>
+      </div>
+      <div class="details">
+        <p class="city">{{ city }}</p>
+        <p class="venue">{{ venue }}</p>
+        <div class="actions">
+          <a
+            v-if="ticketAvailable"
+            :href="ticketUrl"
+            target="_blank"
+            class="button"
+          >
+            Get Tickets
+          </a>
+          <p v-else class="soldOut">Sold out</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +29,7 @@ export default {
   name: "EventCard",
   props: {
     city: String,
+    venue: String,
     datetime: String,
     tickets: Object,
     country: String,
@@ -49,85 +62,63 @@ export default {
 
 .eventInfo {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 15px;
-  border: 5px solid #f5cf9b;
-  border-radius: 30px;
-  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
   margin: 0 20px;
 }
 
-.country {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.datetime {
   font-size: 1.2rem;
   font-weight: bold;
+  margin: 0;
+  color: #f0b058;
 }
 
-.city,
-.venue,
-.datetime {
-  margin-right: 20px;
-  margin-top: 5px;
-  margin-left: 10px;
+.country {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #f0b058;
 }
 
-a {
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.city {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.venue {
+  margin: 0;
+  color: #888;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
-  margin-left: auto;
-  background-color: #f5cf9b;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-decoration: none;
 }
-
-a:hover {
-  background-color: #f0b058;
-}
-
-.eventInfo:hover {
-  background-color: #f5cf9b;
-}
-
-@media screen and (max-width: 768px) {
-  /* for tablets*/
-  .eventInfo {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .city,
-  .venue,
-  .datetime {
-    margin-left: 0;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  /* for phones */
-  .country {
-    font-size: 1rem;
-  }
-
-  .eventInfo {
-    margin: 0;
-    border-radius: 0;
-  }
-
-  .city,
-  .venue,
-  .datetime {
-    font-size: 0.8rem;
-    margin-top: 3px;
-  }
-
-  a {
-    margin-top: 5px;
-    font-size: 0.8rem;
-  }
+.soldOut {
+  font-weight: bold;
+  color: #f44336;
+  margin: 0;
 }
 </style>

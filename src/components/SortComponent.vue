@@ -1,14 +1,22 @@
 <template>
-  <div>
-    <button @click="sort('A to Z')" :class="{ active: isActive('A to Z') }">
+  <div class="button-group">
+    <a
+      @click="sort('A to Z')"
+      :class="{ active: isActive('A to Z') }"
+      class="button"
+    >
       Alphabetic Sort Country/Cities
-    </button>
-    <button @click="sort('Distance')" :class="{ active: isActive('Distance') }">
+    </a>
+    <a
+      @click="sort('Distance')"
+      :class="{ active: isActive('Distance') }"
+      class="button"
+    >
       Sort by Distance
-    </button>
-    <button @click="sort('')" :class="{ active: isActive('') }">
+    </a>
+    <a @click="sort('')" :class="{ active: isActive('') }" class="button">
       Reset Chronologic Sorting
-    </button>
+    </a>
   </div>
 </template>
 
@@ -31,8 +39,13 @@ export default {
 </script>
 
 <style>
-button.active {
-  background-color: #333;
+.button-group {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+a.active {
+  background-color: #f0b058;
   color: #fff;
 }
 </style>
