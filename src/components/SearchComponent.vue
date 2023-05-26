@@ -4,7 +4,7 @@
       type="text"
       v-model="search"
       @input="updateSearchBar"
-      placeholder="Chercher un.e artiste"
+      placeholder="Enter an artist name"
     />
   </div>
 </template>

@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <router-link :to="{ name: 'homePage' }">Accueil</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'artistsGallery' }">Artists</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'contactPage' }">Contact</router-link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  </div>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <router-link :to="{ name: 'homePage' }">Home</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'artistsGallery' }">Artists</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'contactPage' }">Contact</router-link>
+        </li>
+      </ul>
+    </nav>
+  </header>
 </template>
 
 <script>

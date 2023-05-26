@@ -1,7 +1,7 @@
 <template>
   <div class="background-image">
     <div class="image-overlay">
-      <h1>LES ARTISTES !</h1>
+      <h1>OUR ARTISTS !</h1>
       <SearchComponent
         :searchBar="search"
         @update:searchBar="search = $event"
@@ -15,34 +15,37 @@
       <router-link
         :to="{ name: 'eventsPage', params: { artistName: artist.name } }"
       >
-        <ArtistList :artist="artist" />
+        <ArtistCard :artist="artist" />
       </router-link>
     </div>
+    <p v-if="filteredArtists.length === 0" class="no-artist-message">
+      Sorry, this artist has not yet signed with us :c Try another one !
+    </p>
   </div>
 </template>
 
 <script>
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
-import ArtistList from "@/components/ArtistList.vue";
-import { artists, getAllData } from "@/services/api/artistsRepository.js";
+import ArtistCard from "@/components/ArtistCard.vue";
+import { artists, getallData } from "@/services/api/artistsRepository.js";
 
 export default {
   name: "ArtistsGallery",
   components: {
-    ArtistList,
+    ArtistCard,
     SearchComponent,
     LoadingComponent,
   },
   data() {
     return {
-      AllArtistsData: {},
+      allArtitsData: {},
       search: "",
       isLoading: false,
     };
   },
   created() {
-    if (Object.keys(this.AllArtistsData).length === 0) {
+    if (Object.keys(this.allArtitsData).length === 0) {
       // Verify if artists data were already retrieved
       this.retrieveArtistsData();
     }
@@ -54,11 +57,11 @@ export default {
         // Verify if data are in cache
         const cachedData = localStorage.getItem("artistsData");
         if (cachedData) {
-          this.AllArtistsData = JSON.parse(cachedData);
+          this.allArtitsData = JSON.parse(cachedData);
         } else {
-          const AllData = await getAllData(artists);
-          this.AllArtistsData = AllData;
-          localStorage.setItem("artistsData", JSON.stringify(AllData));
+          const allData = await getallData(artists);
+          this.allArtitsData = allData;
+          localStorage.setItem("artistsData", JSON.stringify(allData));
         }
       } catch (error) {
         console.error(error);
@@ -66,7 +69,7 @@ export default {
       this.isLoading = false;
     },
     filterArtists() {
-      return Object.values(this.AllArtistsData).filter((artist) =>
+      return Object.values(this.allArtitsData).filter((artist) =>
         artist.name.toLowerCase().includes(this.search.toLowerCase())
       );
     },
@@ -74,7 +77,7 @@ export default {
   computed: {
     filteredArtists() {
       return this.search === ""
-        ? Object.values(this.AllArtistsData)
+        ? Object.values(this.allArtitsData)
         : this.filterArtists();
     },
   },
@@ -83,7 +86,7 @@ export default {
 <style scoped>
 .background-image {
   position: relative;
-  background-image: url("@/assets/FLPARIS23.png");
+  background-image: url("@/assets/artist-pic.png");
   background-size: cover;
   background-position: center;
   height: 30vh;
@@ -119,5 +122,11 @@ export default {
 .image {
   width: 100%;
   height: auto;
+}
+.no-artist-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
 }
 </style>

@@ -83,7 +83,7 @@ button[type="submit"]:hover {
 @media (max-width: 768px) {
   .contact-form {
     width: 100%;
-    margin-top: 50px;
+    margin: auto;
   }
 }
 </style>

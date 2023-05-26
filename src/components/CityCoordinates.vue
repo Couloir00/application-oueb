@@ -1,7 +1,7 @@
 <template>
   <div>
     <input type="text" v-model="city" placeholder="Enter a city name" />
-    <a @click="getCoordinates" class="button">Get Coordinates</a>
+    <a @click="getCoordinates" class="button">Events near my city</a>
     <p v-show="error">Error: City not found</p>
     <input
       type="range"
@@ -98,6 +98,10 @@ input.slider::-moz-range-thumb {
   height: 20px;
   border-radius: 50%;
   background: #f0b058;
+  cursor: pointer;
+}
+
+.button {
   cursor: pointer;
 }
 </style>

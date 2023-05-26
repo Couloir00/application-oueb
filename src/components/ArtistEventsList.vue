@@ -1,6 +1,6 @@
 <template>
-  <div class="eventCard">
-    <div class="eventInfo">
+  <div class="event-card">
+    <div class="event-info">
       <div class="header">
         <h2 class="datetime">{{ formattedDate }}</h2>
         <h3 class="country">{{ country }}</h3>
@@ -54,13 +54,13 @@ export default {
 </script>
 
 <style scoped>
-.eventCard {
+.event-card {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.eventInfo {
+.event-info {
   display: flex;
   flex-direction: column;
   align-items: center;

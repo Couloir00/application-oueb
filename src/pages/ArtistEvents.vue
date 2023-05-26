@@ -1,6 +1,6 @@
 <template>
-  <h1 class="name">All {{ this.$route.params.artistName }} Events</h1>
-  <p v-show="AllData.length == 0">
+  <h1 class="name">All {{ this.$route.params.artistName }} events</h1>
+  <p v-show="allData.length == 0">
     {{ this.$route.params.artistName }} has no event scheduled at the moment
   </p>
   <CityCoordinates
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       sortOrder: "",
-      AllData: {},
+      allData: {},
       radius: localStorage.getItem("radius") || 100,
       distance: null,
       city: localStorage.getItem("city") || "",
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async retrieveEventsData() {
-      this.AllData = await getEventsData(this.$route.params.artistName);
+      this.allData = await getEventsData(this.$route.params.artistName);
     },
     updateRadius(radius) {
       this.radius = radius;
@@ -73,7 +73,7 @@ export default {
     },
 
     filterEventsByRadius() {
-      const filteredEvents = Object.values(this.AllData);
+      const filteredEvents = Object.values(this.allData);
       if (!this.city || this.latitude === null) {
         return filteredEvents;
       }
@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     filteredEvents() {
-      let events = Object.values(this.AllData);
+      let events = Object.values(this.allData);
 
       if (this.city !== "") {
         events = this.filterEventsByRadius();
@@ -107,9 +107,6 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #ffffff;
-}
 .image {
   display: block;
   margin-left: auto;

@@ -1,27 +1,27 @@
 let artists = [
-  "Lana Del Rey",
-  "Palace",
-  "Phoebe Bridgers",
-  "Clairo",
-  "Pvris",
   "Birdy",
-  "Dizzy",
-  "Hayley Williams",
   "Boygenius",
-  "Lucy Dacus",
-  "Julien Baker",
-  "The Greeting Committee",
-  "Florence & The Machine",
-  "Paramore",
-  "Noga Erez",
-  "Zola Blood",
-  "Mitski",
-  "The Night Game",
   "BROODS",
-  "Phoenix",
-  "Tash Sultana",
-  "Lorde",
+  "Clairo",
+  "Dizzy",
+  "Florence & The Machine",
+  "Hayley Williams",
   "Isaac Delusion",
+  "Julien Baker",
+  "Lana Del Rey",
+  "Lorde",
+  "Lucy Dacus",
+  "Mitski",
+  "Noga Erez",
+  "Palace",
+  "Paramore",
+  "Phoebe Bridgers",
+  "Phoenix",
+  "Pvris",
+  "Tash Sultana",
+  "The Greeting Committee",
+  "The Night Game",
+  "Zola Blood",
 ];
 
 const formattedArtistsNames = async function (artists) {
@@ -35,7 +35,7 @@ const formattedArtistsNames = async function (artists) {
   return artistsData;
 };
 
-const getAllData = async function (artists) {
+const getallData = async function (artists) {
   const formattedArtists = await formattedArtistsNames(artists);
   const artistsData = [];
 
@@ -66,4 +66,4 @@ const getEventsData = async function (artist) {
   }
 };
 
-export { artists, getAllData, getEventsData };
+export { artists, getallData, getEventsData };

@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <footer>
-      <p>2023 Indie Bangerzzz © All rights reserved.</p>
-    </footer>
-  </div>
+  <footer>
+    <p>2023 Indie Bangerzzz © All rights reserved.</p>
+  </footer>
 </template>
 
 <script>
