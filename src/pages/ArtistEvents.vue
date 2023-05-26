@@ -3,19 +3,16 @@
   <p v-show="AllData.length == 0">
     {{ this.$route.params.artistName }} has no event scheduled at the moment
   </p>
-
-  <div class="gallery-options">
-    <CityCoordinates
-      @coordinates-updated="updateCoordinates"
-      @radius-updated="updateRadius"
-    />
-    <SortComponent
-      v-model:actualSort="sortOrder"
-      @update:actualSort="sortOrder = $event"
-    />
-    <br />
-    <br />
-  </div>
+  <CityCoordinates
+    @coordinates-updated="updateCoordinates"
+    @radius-updated="updateRadius"
+  />
+  <SortComponent
+    v-model:actualSort="sortOrder"
+    @update:actualSort="sortOrder = $event"
+  />
+  <br />
+  <br />
   <div class="events-gallery">
     <EventCard
       v-for="event in filteredEvents"

@@ -21,7 +21,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .gallery-options {
   margin-top: 20px;
 }

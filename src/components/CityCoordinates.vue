@@ -68,7 +68,6 @@ export default {
   },
 };
 </script>
-
 <style>
 input.slider {
   -webkit-appearance: none;
