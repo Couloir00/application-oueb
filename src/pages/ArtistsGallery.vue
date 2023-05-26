@@ -1,35 +1,29 @@
 <template>
-  <div class="artists-gallery-container">
-    <div class="background-image">
-      <div class="image-overlay">
-        <h1>LES ARTISTES !</h1>
-        <div class="gallery-options">
-          <input
-            type="text"
-            v-model="search"
-            placeholder="Chercher un.e artiste"
-          />
-        </div>
-      </div>
+  <div class="background-image">
+    <div class="image-overlay">
+      <h1>LES ARTISTES !</h1>
+      <SearchComponent
+        :searchBar="search"
+        @update:searchBar="search = $event"
+      />
     </div>
+  </div>
 
-    <div v-if="isLoading" class="loading">
-      <img src="@/assets/record-load.gif" alt="Loading..." />
-      <p class="loadingText">Loading...</p>
-    </div>
-    <div class="artists-gallery">
-      <div class="test" v-for="artist in filteredArtists" :key="artist.id">
-        <router-link
-          :to="{ name: 'eventsPage', params: { artistName: artist.name } }"
-        >
-          <ArtistList :artist="artist" />
-        </router-link>
-      </div>
+  <LoadingComponent v-if="isLoading" />
+  <div class="artists-gallery">
+    <div class="test" v-for="artist in filteredArtists" :key="artist.id">
+      <router-link
+        :to="{ name: 'eventsPage', params: { artistName: artist.name } }"
+      >
+        <ArtistList :artist="artist" />
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import LoadingComponent from "@/components/LoadingComponent.vue";
+import SearchComponent from "@/components/SearchComponent.vue";
 import ArtistList from "@/components/ArtistList.vue";
 import { artists, getAllData } from "@/services/api/artistsRepository.js";
 
@@ -37,6 +31,8 @@ export default {
   name: "ArtistsGallery",
   components: {
     ArtistList,
+    SearchComponent,
+    LoadingComponent,
   },
   data() {
     return {
@@ -85,10 +81,6 @@ export default {
 };
 </script>
 <style scoped>
-.artists-gallery-container {
-  position: relative;
-}
-
 .background-image {
   position: relative;
   background-image: url("@/assets/FLPARIS23.png");
@@ -111,26 +103,13 @@ export default {
   margin: 0;
 }
 
-.gallery-options {
-  margin-top: 20px;
-}
-
-.gallery-options input {
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 768px) {
   .artists-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
   }
 }
-
 .image-container {
   display: flex;
   justify-content: center;
@@ -140,16 +119,5 @@ export default {
 .image {
   width: 100%;
   height: auto;
-}
-.loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-}
-.loading img {
-  width: 100px;
-  height: 100px;
 }
 </style>

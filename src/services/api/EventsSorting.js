@@ -28,7 +28,6 @@ const sortEvents = function (events, sortOrder, latitude, longitude) {
       return 0;
     });
   } else if (sortOrder === "") {
-    // Lorsque "Reset Sorting" est cliqué, sortOrder est défini sur une chaîne vide, ce qui entraîne la sortie des données brutes sans tri.
     return events;
   }
 };

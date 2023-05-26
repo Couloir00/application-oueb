@@ -7,7 +7,7 @@
             <router-link :to="{ name: 'homePage' }">Accueil</router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'artistsPage' }">Artists</router-link>
+            <router-link :to="{ name: 'artistsGallery' }">Artists</router-link>
           </li>
           <li>
             <router-link :to="{ name: 'contactPage' }">Contact</router-link>

@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <main>
-      <div class="background-image">
-        <div class="text-animation">
-          <span class="word">We</span>
-          <span class="word">are</span>
-          <span class="word">Indie</span>
-          <span class="word">Bangerzzz</span>
-        </div>
-      </div>
-    </main>
+  <div class="background-image">
+    <div class="text-animation">
+      <span class="word">We</span>
+      <span class="word">are</span>
+      <span class="word">Indie</span>
+      <span class="word">Bangerzzz</span>
+    </div>
   </div>
 </template>
 
@@ -35,13 +31,9 @@ export default {
 </script>
 
 <style>
-main {
-  height: 100vh;
-}
-
 .background-image {
   position: relative;
-  height: 100%;
+  height: 100vh;
   background-image: url("@/assets/home-pic.jpg");
   background-size: cover;
   background-position: center;
